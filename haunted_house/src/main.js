@@ -317,6 +317,24 @@ const ghost2 = new THREE.PointLight('#ff0088',6)
 const ghost3 = new THREE.PointLight('#ff0000',6)
 scene.add(ghost1,ghost2,ghost3)
 
+const ghostSphere1 = new THREE.Mesh(
+  new THREE.SphereGeometry(0.07,32,32),
+  new THREE.MeshBasicMaterial({color:'#8800ff'})
+)
+scene.add(ghostSphere1)
+
+const ghostSphere2 = new THREE.Mesh(
+  new THREE.SphereGeometry(0.07,32,32),
+  new THREE.MeshBasicMaterial({color:'#ff0088'})
+)
+scene.add(ghostSphere2)
+
+const ghostSphere3 = new THREE.Mesh(
+  new THREE.SphereGeometry(0.07,32,32),
+  new THREE.MeshBasicMaterial({color:'#ff0000'})
+)
+scene.add(ghostSphere3)
+
 /**
  * Camera
  */
@@ -407,6 +425,7 @@ scene.fog = new THREE.FogExp2('#02343f', 0.07)
  * Orbit Controller
  */
 const orbitControls = new OrbitControls(camera, canvas)
+orbitControls.maxPolarAngle = Math.PI * 0.48
 
 gui.close()
 /**
@@ -432,6 +451,15 @@ const animate = () => {
   ghost3.position.x = Math.cos(ghost3Angle) * 6
   ghost3.position.z = Math.sin(ghost3Angle) * 6
   ghost3.position.y = Math.sin(ghost3Angle) * Math.sin(elapsedTime * 2.34) * Math.sin(elapsedTime * 3.45)
+
+  //flickerring door light
+  doorLight.intensity = Math.abs((Math.sin(elapsedTime) * 3) * Math.random() * 1.5)
+
+  //ghostlight follow
+  ghostSphere1.position.copy(ghost1.position)
+  ghostSphere2.position.copy(ghost2.position)
+  ghostSphere3.position.copy(ghost3.position)
+
 
   renderer.render(scene, camera)
   window.requestAnimationFrame(animate)
