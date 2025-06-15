@@ -338,7 +338,7 @@ scene.add(ghostSphere3)
 /**
  * Camera
  */
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight)
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight)
 camera.position.set(4, 2, 5)
 scene.add(camera)
 
